@@ -175,7 +175,64 @@ func main() {
 
 	fmt.Println()
 
+	/*
+		SLICE
+	*/
+
 	slice1 := integerList[0:5]
 
 	fmt.Println(slice1)
+
+	/*
+		MAP
+	*/
+
+	clientes := make(map[int]string)
+
+	clientes[258742] = "João"
+	clientes[298325] = "Maria"
+	clientes[211223] = "Fernanda"
+	clientes[232312] = "Francisco"
+
+	//fmt.Println(clientes)
+	delete(clientes, 211223)
+
+	for index, name := range clientes {
+		fmt.Printf("%s - %d\n", name, index)
+	}
+
+	funcionariosESalarios := map[string]float64{
+		"Antunes": 2567.45,
+		"Waldeir": 2567.45,
+		"Walter":  5587.15,
+	}
+
+	//fmt.Println(funcionariosESalarios)
+	for index, name := range funcionariosESalarios {
+		fmt.Printf("O funcionário %f ganha %s por mês\n", name, index)
+	}
+
+	/*
+		MAP ALINHADO
+	*/
+
+	listaDeALunosPorFaixa := map[string]map[int]string{
+		"Branca": {
+			1: "Fernando Aguiar",
+			2: "Andreson Pereira",
+		},
+		"Azul": {
+			3: "Robson Nunes",
+			4: "André Silva",
+		},
+		"Roxa": {
+			5: "Raider Costa",
+			6: "Mário Rodovário",
+		},
+	}
+
+	for faixa, aluno := range listaDeALunosPorFaixa {
+		//fmt.Printf("Faixa %s\n %v", faixa, aluno)
+		fmt.Println(faixa, aluno)
+	}
 }
