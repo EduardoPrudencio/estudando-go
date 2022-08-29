@@ -31,6 +31,23 @@ func media(numbers ...int) int {
 	return total / len(numbers)
 }
 
+func fatorial(numero uint) uint {
+	if numero == 0 {
+		return 1
+	}
+
+	return numero * fatorial(numero-1)
+}
+
+func simulaChamada() {
+	defer fmt.Println("Vai executar um pouco antes do return")
+	fmt.Println("Executando o código")
+}
+
+func init() {
+	fmt.Println("O método init é executado sempre antes do main")
+}
+
 func main() {
 
 	success, count := getValues()
@@ -86,8 +103,10 @@ func main() {
 		FUNÇÕES VARIÁTICAS
 	*/
 
+	valores := []int{10, 20, 40, 30}
+	fmt.Println("A média desses números é: ", media(valores...))
 
-	valores := []int{10,20,40,30}
-	fmt.Println("A média desses números é: ",media(valores...))
+	fmt.Println("O fatorial de 5 é:", fatorial(5))
+	simulaChamada()
 
 }
