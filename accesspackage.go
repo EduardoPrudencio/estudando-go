@@ -19,9 +19,13 @@ package main
 import (
 	"calculadora"
 	"fmt"
+
+	"github.com/cod3rcursos/goarea"
 )
 
 func main() {
 	fmt.Println(calculadora.Soma(2, 1))
 	fmt.Println(calculadora.Subtracao(2, 1))
+	//PACOTE BAIXADO DO GITHUB
+	fmt.Println(goarea.Circ(20.5))
 }
