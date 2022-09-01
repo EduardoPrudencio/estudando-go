@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"regexp"
+	"time"
 )
 
 /*
@@ -38,16 +39,44 @@ func join(entrada1 <-chan string, entrada2 <-chan string) <-chan string {
 	return c
 }
 
+func fastResponse(url1, url2, url3 string) string {
+	c1 := getTitle(url1)
+	c2 := getTitle(url2)
+	c3 := getTitle(url3)
+
+	select {
+	case t1 := <-c1:
+		return t1
+	case t2 := <-c2:
+		return t2
+	case t3 := <-c3:
+		return t3
+	case <-time.After(1000 * time.Millisecond):
+		return "Timeout!"
+		// default:
+		// 	return "Sem respostas!"
+	}
+
+}
+
 func main() {
 	// t1 := getTitle("https://google.com.br", "https://youtube.com")
 	// fmt.Println(<-t1)
 	// fmt.Println(<-t1)
 
-	c := join(
-		getTitle("https://google.com.br", "https://youtube.com"),
-		getTitle("https://www.cod3r.com.br", "https://www.amazon.com"),
+	// c := join(
+	// 	getTitle("https://google.com.br", "https://youtube.com"),
+	// 	getTitle("https://www.cod3r.com.br", "https://www.amazon.com"),
+	// )
+
+	// fmt.Println(<-c, "|", <-c)
+	// fmt.Println(<-c, "|", <-c)
+
+	champion := fastResponse(
+		"https://www.youtube.com",
+		"https://www.amazon.com",
+		"https://www.google.com",
 	)
 
-	fmt.Println(<-c, "|", <-c)
-	fmt.Println(<-c, "|", <-c)
+	fmt.Println(champion)
 }
