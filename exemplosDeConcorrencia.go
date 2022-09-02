@@ -56,7 +56,33 @@ func fastResponse(url1, url2, url3 string) string {
 		// default:
 		// 	return "Sem respostas!"
 	}
+}
 
+func talk(sender string) <-chan string {
+	channel := make(chan string)
+	go func() {
+		for i := 0; i < 3; i++ {
+			time.Sleep(time.Second)
+			channel <- fmt.Sprintf("%s falando: %d", sender, i)
+		}
+	}()
+	return channel
+}
+
+func joinTalk(chanelOne, channelTwo <-chan string) <-chan string {
+	channel := make(chan string)
+
+	go func() {
+		for {
+			select {
+			case text := <-chanelOne:
+				channel <- text
+			case text := <-channelTwo:
+				channel <- text
+			}
+		}
+	}()
+	return channel
 }
 
 func main() {
@@ -79,4 +105,14 @@ func main() {
 	)
 
 	fmt.Println(champion)
+
+	fmt.Println("************************************")
+	fmt.Println("   Executando o método joinTalk")
+	fmt.Println("************************************")
+
+	talkChannel := joinTalk(talk("Anna"), talk("Pedro"))
+
+	fmt.Println(<-talkChannel, <-talkChannel)
+	fmt.Println(<-talkChannel, <-talkChannel)
+	fmt.Println(<-talkChannel, <-talkChannel)
 }
