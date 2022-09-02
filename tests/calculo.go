@@ -1,4 +1,4 @@
-package calculo
+package tests
 
 import (
 	"fmt"

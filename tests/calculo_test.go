@@ -3,7 +3,7 @@
 	GO TEST
 */
 
-package calculo
+package tests
 
 import (
 	"testing"
