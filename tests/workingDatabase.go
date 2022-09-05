@@ -34,7 +34,16 @@ func main() {
 
 	defer db.Close()
 
-	exec(db, "create database if not exists cursogo")
-	fmt.Println("Tudo ok!")
+	exec(db, "create database if not exists estudando_go")
+	fmt.Println("Banco de dados criado!")
+	
+	exec(db, "use estudando_go")
+	exec(db, "drop table if exists users")
+	exec(db, `create table uers (
+		id integer auto_increment,
+		name varchar(80),
+		PRIMARY KEY (id)
+	)`)
+	fmt.Println("Tabela users criada!")
 
 }
