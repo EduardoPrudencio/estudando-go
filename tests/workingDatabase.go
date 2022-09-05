@@ -25,7 +25,7 @@ func exec(db *sql.DB, sql string) sql.Result {
 }
 
 func main() {
-	fmt.Println(" Testando")
+	fmt.Println(" Conectando...")
 	db, err := sql.Open("mysql", "root:q6dw@s460e@/")
 
 	if err != nil {
@@ -35,4 +35,6 @@ func main() {
 	defer db.Close()
 
 	exec(db, "create database if not exists cursogo")
+	fmt.Println("Tudo ok!")
+
 }
