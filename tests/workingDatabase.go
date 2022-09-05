@@ -23,27 +23,57 @@ func exec(db *sql.DB, sql string) sql.Result {
 
 	return result
 }
+func connectDb(dbName string) *sql.DB {
 
-func main() {
-	fmt.Println(" Conectando...")
-	db, err := sql.Open("mysql", "root:q6dw@s460e@/")
+	fmt.Printf(" Conectando em db %s ...\n", dbName)
+	serverFullName := fmt.Sprintf("root:q6dw@s460e@/%s", dbName)
+
+	// fmt.Println(serverFullName)
+
+	db, err := sql.Open("mysql", serverFullName)
 
 	if err != nil {
 		panic(err)
 	}
 
-	defer db.Close()
+	// defer db.Close()
+	return db
+}
 
-	exec(db, "create database if not exists estudando_go")
+func insert(db *sql.DB, userName string) {
+	stmt, _ := db.Prepare("insert into users(name) values(?)")
+	res, _ := stmt.Exec(userName)
+	id, _ := res.LastInsertId()
+
+	fmt.Printf("O id gerado para o insert do usuário %s foi %d", userName, id)
+}
+
+func main() {
+
+	dbName := "estudo_go"
+
+	db := connectDb("")
+
+	createTableCommand := "create database if not exists " + dbName
+	exec(db, createTableCommand)
 	fmt.Println("Banco de dados criado!")
-	
-	exec(db, "use estudando_go")
+
+	referDbCommand := "use " + dbName
+
+	exec(db, referDbCommand)
 	exec(db, "drop table if exists users")
-	exec(db, `create table uers (
+	exec(db, `create table users (
 		id integer auto_increment,
 		name varchar(80),
 		PRIMARY KEY (id)
 	)`)
+
+	// defer db.Close()
+
 	fmt.Println("Tabela users criada!")
 
+	db = connectDb(dbName)
+
+	insert(db, "Maria")
+	defer db.Close()
 }
