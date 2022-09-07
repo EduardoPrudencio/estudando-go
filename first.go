@@ -43,6 +43,12 @@ func main() {
 		valorDeTeste := 2 (Inferência de valor)
 	*/
 
+	nome := ""
+	sobreNome := ""
+	fmt.Println("Informe um nome e sobrenome")
+	fmt.Scanln(&nome, &sobreNome)
+	fmt.Println("O nome e sobrenome informado pelo usuário foram:git ", nome, sobreNome)
+
 	const valorDeConstante int = 2
 	var valorDeVariavel int = 2
 	numeroRandomico := rand.Intn(1000)
